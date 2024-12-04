@@ -1,11 +1,11 @@
-const db = require("../models");
+const db = require("../../models");
 const Admin = db.admins;
 const { Op } = require("sequelize"); // Import Op from sequelize
 const OTP = db.otp;
 
-const RESPONSE = require("../constants/response");
-const { MESSAGE } = require("../constants/message");
-const { StatusCode } = require("../constants/HttpStatusCode");
+const RESPONSE = require("../../constants/response");
+const { MESSAGE } = require("../../constants/message");
+const { StatusCode } = require("../../constants/HttpStatusCode");
 
 // Function to create default admins from only controller
 // exports.createDefaultAdmins = async () => {

@@ -1,13 +1,17 @@
-const imageController = require("../controllers/upload_image.controller.js");
-const videoController = require("../controllers/upload_video.controller.js");
-const audioController = require("../controllers/upload_audio.controller.js");
-const pdfController = require("../controllers/upload_pdf.controller.js");
-const adminController = require("../controllers/admin.controller.js");
-const managerController = require("../controllers/manager.controller.js");
-const customerController = require("../controllers/customer.controller.js");
+const imageController = require("../controllers/upload_files_controller/upload_image.controller.js");
+const videoController = require("../controllers/upload_files_controller/upload_video.controller.js");
+const audioController = require("../controllers/upload_files_controller/upload_audio.controller.js");
+const pdfController = require("../controllers/upload_files_controller/upload_pdf.controller.js");
+const adminController = require("../controllers/admin_controller/admin.controller.js");
+const kycController = require("../controllers/admin_controller/kycs.controller.js");
+const benefitSchedulesController = require("../controllers/admin_controller/BenefitSchedule.controller.js");
+const plansController = require("../controllers/admin_controller/plan.controller.js");
+const purchaseController = require("../controllers/admin_controller/purchase.controller.js")
+// const managerController = require("../controllers/manager.controller.js");
+const customerController = require("../controllers/customer_controller/customer.controller.js");
 const router = require("express").Router();
-const isAuthenticated = require("../middleware/auth_middleware.js");
-const otpController = require("../controllers/otp.controller.js");
+const isAuthenticated = require("../middlewares/auth_middleware.js");
+const otpController = require("../controllers/other_controllers/otp.controller.js");
 
 // uploads
 
@@ -37,22 +41,6 @@ router.post(
 );
 
 
-
-// manager Routes
-router.post("/register/manager", managerController.registerManager);
-router.post("/login/manager", managerController.loginManager);
-router.get("/getManagerById/:manager_id", managerController.getManagerById);
-router.delete("/deleteManager/:manager_id", managerController.deleteManager);
-router.put("/editManagerInfo/:manager_id", managerController.editManagerInfo);
-router.post(
-  "/resetPasswordForManager",
-  managerController.resetPasswordForManager
-);
-router.post(
-  "/checkEmailPhoneAvailabilityForManager/:manager_id",
-  managerController.checkEmailPhoneAvailabilityForManager
-);
-
 // customer Routes
 router.post("/register/customer", customerController.registerCustomer);
 router.post(
@@ -81,9 +69,42 @@ router.post(
 );
 
 
+
+
+
 // Routes for OTP
 router.post("/sendOTP", otpController.sendOTP);
 router.post("/verifyOTP", otpController.verifyOTP);
+
+// Routes for kyc
+router.post("/addCountryWithKYC", kycController.addCountryWithKYC);
+router.get("/getKYCByCountry/:country_name", kycController.getKYCByCountry);
+router.post("/addKYCToExistingCountry", kycController.addKYCToExistingCountry);
+
+// Routes for BenefitSchedule
+
+router.post("/addBenefitSchedule", benefitSchedulesController.addBenefitSchedule); // Add a new benefit schedule
+router.get("/getAllBenefitSchedules", benefitSchedulesController.getAllBenefitSchedules); // Get all benefit schedules
+router.get("/getBenefitScheduleById/:schedule_id", benefitSchedulesController.getBenefitScheduleById); // Get a benefit schedule by ID
+router.put("/updateBenefitSchedule/:schedule_id", benefitSchedulesController.updateBenefitSchedule); // Update a benefit schedule
+router.delete("/deleteBenefitSchedule/:schedule_id", benefitSchedulesController.deleteBenefitSchedule); // Soft delete a benefit schedule
+
+
+
+
+// Routes for plans
+router.post("/addPlan", plansController.addPlan);
+router.get("/getAllPlans", plansController.getAllPlans);
+router.get("/getPlanById/:plan_id", plansController.getPlanById);
+router.put("/updatePlan/:plan_id", plansController.updatePlan);
+router.delete("/deletePlan/:plan_id", plansController.deletePlan);
+
+// Routes for purchase
+router.post("/addPurchase", purchaseController.addPurchase);
+router.get("/getAllPurchases", purchaseController.getAllPurchases);
+router.get("/getPurchasesByCustomerId/:customer_id", purchaseController.getPurchasesByCustomerId);
+router.get("/getPurchaseById/:purchase_id", purchaseController.getPurchaseById);
+
 
 
 

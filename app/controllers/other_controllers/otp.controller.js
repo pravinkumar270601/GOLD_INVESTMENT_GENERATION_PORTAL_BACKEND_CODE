@@ -1,11 +1,11 @@
 const nodemailer = require("nodemailer");
-const db = require("../models");
+const db = require("../../models");
 const OTP = db.otp;
-const config = require("../config/db.config");
+const config = require("../../config/db.config");
 
-const RESPONSE = require("../constants/response");
-const { MESSAGE } = require("../constants/message");
-const { StatusCode } = require("../constants/HttpStatusCode");
+const RESPONSE = require("../../constants/response");
+const { MESSAGE } = require("../../constants/message");
+const { StatusCode } = require("../../constants/HttpStatusCode");
 
 // Create nodemailer transporter
 // Create nodemailer transporter

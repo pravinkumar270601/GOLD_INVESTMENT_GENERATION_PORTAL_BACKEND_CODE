@@ -1,8 +1,9 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const RESPONSE = require("../constants/response");
-const { StatusCode } = require("../constants/HttpStatusCode");
+const RESPONSE = require("../../constants/response");
+const { MESSAGE } = require("../../constants/message");
+const { StatusCode } = require("../../constants/HttpStatusCode");
 
 // const PDF_UPLOAD_DIR = process.env.PDF_UPLOAD_DIR || "uploads/pdfs/";
 

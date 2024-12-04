@@ -1,10 +1,10 @@
-const db = require("../models");
+const db = require("../../models");
 const Customer = db.customers;
 const { Op } = require("sequelize"); // Import Op from sequelize
 const OTP = db.otp;
-const RESPONSE = require("../constants/response");
-const { MESSAGE } = require("../constants/message");
-const { StatusCode } = require("../constants/HttpStatusCode");
+const RESPONSE = require("../../constants/response");
+const { MESSAGE } = require("../../constants/message");
+const { StatusCode } = require("../../constants/HttpStatusCode");
 const bcrypt = require("bcrypt"); // Import bcrypt
 
 exports.checkCustomerExistForRegister = async (req, res) => {

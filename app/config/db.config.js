@@ -6,7 +6,7 @@ module.exports = {
   PASSWORD: process.env.PASSWORD,
   DB: process.env.DB_NAME,
   dialect: "mysql",
-  timezone: "+05:30", // Indian Standard Time (UTC+5:30)
+  timezone: "+00:00", // UTC timezone 
   pool: {
     max: 5,
     min: 0,

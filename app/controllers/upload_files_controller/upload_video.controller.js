@@ -1,8 +1,8 @@
 const multer = require("multer");
 const path = require("path");
-const RESPONSE = require("../constants/response");
-const { MESSAGE } = require("../constants/message");
-const { StatusCode } = require("../constants/HttpStatusCode");
+const RESPONSE = require("../../constants/response");
+const { MESSAGE } = require("../../constants/message");
+const { StatusCode } = require("../../constants/HttpStatusCode");
 
 // Set up storage for video files
 const storage = multer.diskStorage({
