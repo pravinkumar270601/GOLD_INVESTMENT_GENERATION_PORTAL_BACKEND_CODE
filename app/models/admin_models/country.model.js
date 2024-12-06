@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
         country_name: {
           type: Sequelize.STRING,
           allowNull: false,
-          unique: true, // Ensure country names are unique
+          // unique: true, // Ensure country names are unique
         },
         delete_status: {
           type: Sequelize.TINYINT,

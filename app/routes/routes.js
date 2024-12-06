@@ -7,6 +7,7 @@ const kycController = require("../controllers/admin_controller/kycs.controller.j
 const benefitSchedulesController = require("../controllers/admin_controller/BenefitSchedule.controller.js");
 const plansController = require("../controllers/admin_controller/plan.controller.js");
 const purchaseController = require("../controllers/admin_controller/purchase.controller.js")
+const withdrawalController = require("../controllers/admin_controller/withdrawal.controller.js");
 // const managerController = require("../controllers/manager.controller.js");
 const customerController = require("../controllers/customer_controller/customer.controller.js");
 const router = require("express").Router();
@@ -104,8 +105,11 @@ router.post("/addPurchase", purchaseController.addPurchase);
 router.get("/getAllPurchases", purchaseController.getAllPurchases);
 router.get("/getPurchasesByCustomerId/:customer_id", purchaseController.getPurchasesByCustomerId);
 router.get("/getPurchaseById/:purchase_id", purchaseController.getPurchaseById);
+router.put("/updatePurchase/:purchase_id", purchaseController.updatePurchase); // Update Purchase
+router.delete("/deletePurchase/:purchase_id", purchaseController.deletePurchase); // Delete Purchase
 
-
+// Route to handle gold withdrawal
+router.post("/withdrawGold", withdrawalController.withdrawGold);
 
 
 module.exports = router;

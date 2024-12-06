@@ -11,10 +11,18 @@ module.exports = (sequelize, Sequelize) => {
       customer_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "customers", // Table name for the reference
+          key: "customer_id",
+        }
       },
       plan_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "plans", // Table name for the reference
+          key: "plan_id",
+        }
       },
       purchase_date: {
         type: Sequelize.DATE,
@@ -46,6 +54,20 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         defaultValue: false, // True if customer has accepted the purchase contract
       },
+      schedule_name: {
+        type: Sequelize.STRING,
+        allowNull: false, // Derived from Benefit Schedule
+      },
+      intervals_per_lock_year: {
+        type: Sequelize.INTEGER,
+        allowNull: false, // Derived from Benefit Schedule
+      },
+      status: {
+        type: Sequelize.ENUM,
+        values: ["active", "closed"],
+        defaultValue: "active",
+        allowNull: false,
+      },      
       delete_status: {
         type: Sequelize.TINYINT,
         defaultValue: 0, // Soft delete: 0 = active, 1 = deleted

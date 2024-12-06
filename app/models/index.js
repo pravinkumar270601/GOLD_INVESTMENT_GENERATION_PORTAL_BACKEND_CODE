@@ -40,6 +40,8 @@ db.kycs = require("./admin_models/kyc.model.js")(sequelize, Sequelize);
 db.plans = require("./admin_models/plans.model.js")(sequelize, Sequelize);
 db.purchases = require("./admin_models/purchase.model.js")(sequelize, Sequelize);
 db.benefit_schedules = require("./admin_models/BenefitSchedule.model.js")(sequelize, Sequelize);
+db.withdrawals = require("./admin_models/withdrawal.model.js")(sequelize, Sequelize);
+
 // Establish relationships (associations)
 db.countries.hasMany(db.kycs, {
   foreignKey: "country_id",
@@ -64,6 +66,15 @@ db.benefit_schedules.hasMany(db.plans, {
   onUpdate: "CASCADE",
   onDelete: "CASCADE",
 });
+
+// Customer has many Purchases
+db.customers.hasMany(db.purchases, { foreignKey: "customer_id" });
+db.purchases.belongsTo(db.customers, { foreignKey: "customer_id" });
+
+// Plan has many Purchases
+db.plans.hasMany(db.purchases, { foreignKey: "plan_id" });
+db.purchases.belongsTo(db.plans, { foreignKey: "plan_id" });
+
 
 
 db.customers.hasMany(db.purchases, { foreignKey: "customer_id" });
