@@ -5,8 +5,6 @@ const { Op } = require("sequelize");
 const RESPONSE = require("../../constants/response");
 const { StatusCode } = require("../../constants/HttpStatusCode");
 
-
-
 exports.withdrawGold = async (req, res) => {
   try {
     const { purchase_id, withdrawal_date } = req.body;
@@ -36,24 +34,27 @@ exports.withdrawGold = async (req, res) => {
       lock_in_years,
       total_benefit_percentage,
       gold_stake_grams,
+      amount_in_usd,
     } = purchase;
+
+    // Current gold price (fetch this from an external source or use a fixed value)
+    const currentGoldPrice = 83; // Example: 1 gram of gold = 60 USD, this should be dynamic
 
     // Calculate intervals
     const intervalDurationMonths = Math.floor(
       (lock_in_years * 12) / intervals_per_lock_year
-    ); 
-    console.log(lock_in_years);
-    console.log(intervals_per_lock_year);
-    console.log(intervalDurationMonths);
-    
-    
-    // Duration of each interval in months
+    );
+    // console.log(lock_in_years);
+    // console.log(intervals_per_lock_year);
+    // console.log(intervalDurationMonths);
 
+    // Duration of each interval in months
 
     const intervals = [];
     const purchaseStartDate = new Date(purchase_date);
+    // console.log(purchaseStartDate);
 
-    for (let i = 0; i < intervals_per_lock_year * lock_in_years; i++) {
+    for (let i = 1; i <= intervals_per_lock_year; i++) {
       const intervalDate = new Date(purchaseStartDate);
       intervalDate.setMonth(
         purchaseStartDate.getMonth() + intervalDurationMonths * i
@@ -77,11 +78,18 @@ exports.withdrawGold = async (req, res) => {
       });
     }
 
+    console.log(withdrawalIndex);
+
     // Calculate benefits and gold withdrawn
     const benefitPercentage =
       ((withdrawalIndex + 1) * total_benefit_percentage) /
-      (intervals_per_lock_year * lock_in_years);
-    const goldWithdrawn = (benefitPercentage / 100) * gold_stake_grams;
+      intervals_per_lock_year;
+
+    // Calculate the benefit in USD
+    const benefitInUSD = (benefitPercentage / 100) * amount_in_usd;
+
+    // Convert benefit in USD to gold
+    const goldWithdrawn = benefitInUSD / currentGoldPrice; // Convert USD to gold using current price
 
     // Create a withdrawal entry
     const withdrawal = await Withdrawal.create({
@@ -99,6 +107,8 @@ exports.withdrawGold = async (req, res) => {
     RESPONSE.Success.data = {
       withdrawal,
       intervals,
+      benefitInUSD,  // Include the benefit amount in USD for transparency
+      goldWithdrawn,
     };
     return res.status(StatusCode.OK.code).send(RESPONSE.Success);
   } catch (error) {
@@ -107,7 +117,3 @@ exports.withdrawGold = async (req, res) => {
     return res.status(StatusCode.SERVER_ERROR.code).send(RESPONSE.Failure);
   }
 };
-
-
-
-
