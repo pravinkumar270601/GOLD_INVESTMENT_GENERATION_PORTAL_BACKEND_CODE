@@ -110,6 +110,9 @@ router.delete("/deletePurchase/:purchase_id", purchaseController.deletePurchase)
 
 // Route to handle gold withdrawal
 router.post("/withdrawGold", withdrawalController.withdrawGold);
-
+router.get("/getAllWithdrawals", withdrawalController.getAllWithdrawals);
+router.get("/getWithdrawalById/:withdrawal_id", withdrawalController.getWithdrawalById);
+router.delete("/deleteWithdrawal/:withdrawal_id", withdrawalController.deleteWithdrawal);
+router.put("/updateWithdrawal/:withdrawal_id", withdrawalController.updateWithdrawal);
 
 module.exports = router;
